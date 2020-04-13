@@ -1,24 +1,11 @@
-# space-map-cities
+# Cities as Stars
 
-I really liked Nadieh Brenner's star map of Hubble observations
+This project was a for-fun copy-cat of  [Nadieh Brenner's star map of Hubble observations](https://www.visualcinnamon.com/2020/04/designing-the-hubble-skymap "Nadieh Brenner's star map of Hubble observations").
 
-https://www.visualcinnamon.com/2020/04/designing-the-hubble-skymap
+Her original work uses a stereographic projection of the sky, hence the two circles. Mine is a basic earthly projection of the city of Boston and I only used the two-circle layout in some screenshtos for visual interest.
 
-so I decided to learn d3 geo-projecting and plot cities with the same theme. Nadieh's code is not public so I figured it all out myself (aka copy-pasted one hundred different d3 examples and hacked them together).
+This project uses d3 geo and HTML5 Canvas to draw 225k+ city elements from Boston's [open data website](https://data.boston.gov/ "open data website") and styles them as the celestial bodies in Nadieh's work.
 
-This project plots just over 225,000 publicly shared GIS points to an HTML5 Canvas element which is cool because SVGs make the browser sweat at a thousand elements. 
+Drawing to Canvas is relevant because SVG typically can't handle more than a couple thousand SVG elements. Canvas is a lower level drawing interface that is far more performant by virtue of never drawing to the DOM. Canvas interactions and animations have to be implemented manually so it's best suited for large static data-driven visuals.
 
-The density contours come directly from Nadieh's work and are totally meangingless.
-
-Data comes from:
-
-Boston Open Data 
-https://data.boston.gov/
-
-Camrbridge Open Data
-https://www.cambridgema.gov/departments/opendata
-
-and probably should have gotten Brookline involved too.
-
-"trees" (31mb was the largest geoJSON file that would draw without killing the tab. Buildsings (105mb) and street addresses (63mb) killed the tab. They could probably be reduced by removing their metadata but I didn't attempt it. 
-
+The largest data drawn was Boston's "trees" at 31mb of geoJson. Buildings and street addresses killed the tab at 105mb and 63mb respectively.
