@@ -1,22 +1,7 @@
 var all_draw_instructions = {
   // lines
-  "neighborhoods": {
-    "promise": d3.json("data/neighborhoods.geo.json"),
-    "type": "lines",
-    "category": "boundary"
-  },
-  "census_tracts": {
-    "promise": d3.json("data/census_tracts.geo.json"),
-    "type": "lines",
-    "category": "boundary"
-  },
-  "cambridge_election_ward_precints": {
-    "promise": d3.json("data/cambridge_election_ward_precints.geo.json"),
-    "type": "lines",
-    "category": "boundary"
-  },
-  "cambridge_buildings": {
-    "promise": d3.json("data/cambridge_buildings.geo.json"),
+  "hydrography": {
+    "promise": d3.json("data/hydro_polygons.geo.json"),
     "type": "lines",
     "category": "boundary"
   },
@@ -66,32 +51,20 @@ var all_draw_instructions = {
     "type": "points",
     "category": "cat3"
   },
-  "cambridge_street_map": {
-    "promise": d3.json("data/cambridge_street_map.geo.json"),
-    "type": "points",
-    "category": "cat1"
-  },
    "trees": {
     "promise": d3.json("data/trees.geo.json"),
     "type": "points",
     "category": "cat1"
-  },
-   "street_map": {
-     "promise": d3.json("data/street_map.geo.json"),
-     "type": "points",
-     "category" : "cat1"
-   },
-   "buildings": {
-     "promise": d3.json("data/buildings.geo.json"),
-     "type": "points",
-     "category" : "cat1"
-   }
+  }
 };
 
 console.log(Object.keys(all_draw_instructions));
 
-var w = window.innerWidth - 10;
-var h = window.innerHeight - 10;
+//var w = window.innerWidth - 10;
+//var h = window.innerHeight - 10;
+
+var w = 800;
+var h = 800;
 
 // space colors from nadieh
 var bg_color = "#000817";
@@ -128,29 +101,35 @@ var draw_lines = true;
 var draw_points = true;
 var draw_contours = true;
 
-var canvas = d3.select("canvas")
+var canvas1 = d3.select("canvas.canvas-1")
+  .attr("width", w)
+  .attr("height", h)
+  .attr("style", "background-color: " + bg_color + ";");
+
+var canvas2 = d3.select("canvas.canvas-2")
   .attr("width", w)
   .attr("height", h)
   .attr("style", "background-color: " + bg_color + ";");
 
 // true Boston Center [-71.057083, 42.361145]
 var pCenter = [-71.069083, 42.351145];
-var pScale = 1000000
+var pScale = 500000
 
 var projection = d3.geoEquirectangular()
   .translate([w / 2, h / 2])
   .center(pCenter)
   .scale(pScale);
 
-var context = canvas.node().getContext("2d");
+var context = canvas1.node().getContext("2d");
 
 var geoGenerator = d3.geoPath()
   .projection(projection)
   .context(context)
   .pointRadius(function(d) { return 4 });
 
+var context2 = canvas2.node().getContext("2d");
 var geoGeneratorId = d3.geoPath()
-  .context(context);
+  .context(context2);
 
 context.globalCompositeOperation = 'source-over';
 context.lineCap = "round";
@@ -237,8 +216,8 @@ function draw_category_contours(data) {
   console.log(category_coordinates);
   
   // compute and draw contours for each category
-  context.lineWidth = 2;
-  context.shadowBlur = 0;
+  context2.lineWidth = 2;
+  context2.shadowBlur = 0;
 
   for(var i = 0; i < Object.keys(category_coordinates).length; i++) {
 
@@ -249,26 +228,26 @@ function draw_category_contours(data) {
       .x(function(d) { return projection(d)[0]; })
       .y(function(d) { return projection(d)[1]; })
       .size([w, h])
-      .bandwidth(50)    // smaller = more precise
-      .thresholds(8)    // controls total contours drawn
+      .bandwidth(25)    // smaller = more precise
+      .thresholds(7)    // controls total contours drawn
       (coordinate_list);
 
-    context.strokeStyle = category_colors[key];
-    context.fillStyle = category_colors_faded[key];
+    context2.strokeStyle = category_colors[key];
+    context2.fillStyle = category_colors_faded[key];
 
     console.log(densityData);
     densityData.forEach(c => {
           if (c.coordinates.length == 0) return;
-          context.beginPath();
+          context2.beginPath();
           geoGeneratorId(c);
-          context.stroke();
-          context.fill();
+          context2.stroke();
+          context2.fill();
       });
   };
 }
 
 
-var draw_feature_names = ['cambridge_election_ward_precints', "census_tracts", 'neighborhoods', // boundaries
+var draw_feature_names = ['hydrography', // boundaries
                           'trees',  // cat 1
                           'hospitals', 'police', 'libraries', 'universities', // cat 2
                           'traffic_signals', 'hydrants', 'parking_meters', 'cambridge_intersections'] // cat 3

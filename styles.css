@@ -60,9 +60,35 @@ a { color:inherit; }
 /* Customs */
 
 body {
-	padding:5px;
+	padding-top:30px;
+	background: rgba(0, 8, 23, 1);
+	text-align:center;
+	font-size: 0;
 }
 canvas {
-  margin: 0 auto;
-  display:block;
+  display:inline-block;
+  border:4px dashed white;
+  font-size:initial;
+  	border-radius:50%;
 }
+.canvas-2 {
+	left:-4px;
+	position:relative;
+}
+
+/*
+   "red": "rgba(252, 14, 15, 1)",
+   "red_fade": "rgba(252, 14, 15, 0.2)", 
+   "blue": "rgba(110, 226, 246, 1)",
+   "blue_fade": "rgba(110, 226, 246, 0.2)",
+   "yellow": "rgba(253, 252, 101, 1)",
+   "yellow_fade": "rgba(253, 252, 101, 0.2)",
+   "pink": "rgba(254, 47, 247, 1)",
+   "pink_fade": "rgba(254, 47, 247, 0.2)",
+   "green": "rgba(72, 207, 93, 1)",
+   "green_fade": "rgba(72, 207, 93, 0.2)",
+   "white": "rgba(247, 249, 252, 1)",
+   "white_fade": "rgba(247, 249, 252, 0.2)",
+   "space": "rgba(0, 8, 23, 1)",
+   "space_fade": "rgba(0, 8, 23, 0.2)",
+*/
