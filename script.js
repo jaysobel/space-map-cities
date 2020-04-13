@@ -169,13 +169,13 @@ function draw_features(data) {
         context.fillStyle = category_colors[cat];
         //context.shadowBlur = 9;
         //context.shadowColor = category_colors[cat];
-        geoGenerator.pointRadius(5);
+        geoGenerator.pointRadius(3);
       }
       else if (cat == 'cat3') {
         context.fillStyle = category_colors[cat];
         //context.shadowBlur = 6;
         //context.shadowColor = category_colors[cat];
-        geoGenerator.pointRadius(3);
+        geoGenerator.pointRadius(1);
       }
       context.beginPath();
       geoGenerator({ type: 'FeatureCollection', features: data[i].features} );
@@ -219,17 +219,33 @@ function draw_category_contours(data) {
   context2.lineWidth = 2;
   context2.shadowBlur = 0;
 
+  // default thresholds/bandwidths
+  var bw = 10;
+  var th = 6;
+
   for(var i = 0; i < Object.keys(category_coordinates).length; i++) {
 
     key = Object.keys(category_coordinates)[i];
     coordinate_list = category_coordinates[key];
 
+    if (key == 'cat1') {
+      bw = 10;
+      th = 5;
+    }
+    else if (key == 'cat2') {
+      bw = 15;
+      th = 4;
+    }
+    else if (key == 'cat3') {
+      bw = 15;
+      th = 5;
+    }
     var densityData = d3.contourDensity()
       .x(function(d) { return projection(d)[0]; })
       .y(function(d) { return projection(d)[1]; })
       .size([w, h])
-      .bandwidth(25)    // smaller = more precise
-      .thresholds(7)    // controls total contours drawn
+      .bandwidth(bw)    // smaller = more precise
+      .thresholds(th)    // controls total contours drawn
       (coordinate_list);
 
     context2.strokeStyle = category_colors[key];
@@ -250,7 +266,7 @@ function draw_category_contours(data) {
 var draw_feature_names = ['hydrography', // boundaries
                           'trees',  // cat 1
                           'hospitals', 'police', 'libraries', 'universities', // cat 2
-                          'traffic_signals', 'hydrants', 'parking_meters', 'cambridge_intersections'] // cat 3
+                          'traffic_signals', 'hydrants', 'cambridge_intersections'] // cat 3
 
 var draw_contour_categories = ['cat1', 'cat2', 'cat3']
 
