@@ -6,6 +6,12 @@ Her original work uses a stereographic projection of the sky. That means the two
 
 My version uses two circles containers for fun. Both contain a basic earthly projection of the same area of the city of Boston.
 
+Here are two high-res screenshots from the 'screenshots' folder (scroll sideways to view second circle)
+
+https://github.com/73805/space-map-cities/blob/master/screenshots/varied_contour_params.PNG
+
+https://github.com/73805/space-map-cities/blob/master/screenshots/smaller_points_and_finer_contours.PNG
+
 I used d3 geo and HTML5 Canvas to draw 225k+ city elements from Boston's [open data website](https://data.boston.gov/ "open data website") and styled them as the celestial bodies in Nadieh's work.
 
 The largest data source was Boston's "trees" at 31mb of geoJson. Buildings and street addresses killed the tab at 105mb and 63mb respectively. 
