@@ -18,4 +18,4 @@ The largest data source was Boston's "trees" at 31mb of geoJson. Buildings and s
 
 The usage of Canvas is notable, as Nadieh's blog explains, because it's a lower-level drawing interface than SVG. In SVG every "element" of a drawing becomes an element in the HTML DOM which means it grinds to a halt ~2,000 elements. 
 
-Canvas draws with pixels which raises the volume of drawn "elements" substantially. The downside is that basic web interactivity-click on thing- thinks of the 'thing' as a DOM element. Interactivity in canvas must be implemented, and tends to build off of "what color thing was clicked" in a hidden secondary space where elements are uniqly colored and mapped to twins in the visible space. 
+Canvas draws with pixels which raises the volume of drawn "elements" substantially. The downside is that basic web interactivity-click on thing- thinks of the 'thing' as a DOM element. 
